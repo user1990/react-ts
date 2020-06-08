@@ -1,19 +1,46 @@
-import React from 'react';
-import './App.css';
+import React, { useState } from 'react';
+import { Grid } from '@material-ui/core';
 
-const App: React.FC = () => {
+import { SearchBar, VideoList, VideoDetail } from './components';
+
+import youtube from './api/youtube';
+import { Video } from './interfaces/video';
+
+export default () => {
+  const [videos, setVideos] = useState<Video[]>([]);
+  const [selectedVideo, setSelectedVideo] = useState<Video | any>(null);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Grid style={{ justifyContent: 'center' }} container spacing={10}>
+      <Grid item xs={11}>
+        <Grid container spacing={10}>
+          <Grid item xs={12}>
+            <SearchBar onSubmit={handleSubmit} />
+          </Grid>
+          <Grid item xs={8}>
+            <VideoDetail video={selectedVideo} />
+          </Grid>
+          <Grid item xs={4}>
+            <VideoList videos={videos} onVideoSelect={setSelectedVideo} />
+          </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
   );
-};
 
-export default App;
+  async function handleSubmit(searchTerm: string) {
+    const {
+      data: { items: videos },
+    } = await youtube.get('search', {
+      params: {
+        part: 'snippet',
+        maxResults: 5,
+        key: process.env.REACT_APP_API_KEY,
+        q: searchTerm,
+      },
+    });
+
+    setVideos(videos);
+    setSelectedVideo(videos[0]);
+  }
+};

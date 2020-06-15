@@ -8,11 +8,12 @@ interface Props {
 }
 
 const Input = styled.input`
-  width: 85vw;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-gap: 20px;
+  -webkit-appearance: none;
+  border: none;
+  padding: 10px;
+  width: 150px;
+  line-height: 30px;
+  margin-bottom: 30px;
 `;
 
 export const SearchBox = ({ placeholder, onSearchChange }: Props) => (

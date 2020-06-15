@@ -3,6 +3,7 @@ import React, { ChangeEvent } from 'react';
 import styled from 'styled-components';
 
 interface Props {
+  placeholder: string;
   onSearchChange: (event: ChangeEvent) => void;
 }
 
@@ -14,10 +15,6 @@ const Input = styled.input`
   grid-gap: 20px;
 `;
 
-export const SearchBox = (props: Props) => (
-  <Input
-    type="search"
-    placeholder="search monsters"
-    onChange={props.onSearchChange}
-  />
+export const SearchBox = ({ placeholder, onSearchChange }: Props) => (
+  <Input type="search" placeholder={placeholder} onChange={onSearchChange} />
 );

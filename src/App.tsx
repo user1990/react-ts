@@ -34,7 +34,10 @@ const App = () => {
   return (
     <div className="App">
       <h1>Monsters Rolodex</h1>
-      <SearchBox onSearchChange={onSearchChange} />
+      <SearchBox
+        placeholder="Search monsters"
+        onSearchChange={onSearchChange}
+      />
       <CardList monsters={filteredMonsters} />
     </div>
   );

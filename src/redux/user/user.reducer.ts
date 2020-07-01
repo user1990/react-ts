@@ -1,11 +1,13 @@
-import { UserActionTypes, ActionTypes } from './user.types';
+import { ActionTypes, UserActionTypes } from './user.types';
 
 export interface State {
-  currentUser: null;
+  currentUser: unknown;
+  error: any;
 }
 
-const userInitialState: State = {
+export const userInitialState: State = {
   currentUser: null,
+  error: null,
 };
 
 const userReducer = (state = userInitialState, action: UserActionTypes) => {
@@ -14,6 +16,7 @@ const userReducer = (state = userInitialState, action: UserActionTypes) => {
       return {
         ...state,
         currentUser: action.payload,
+        error: null,
       };
     default:
       return state;

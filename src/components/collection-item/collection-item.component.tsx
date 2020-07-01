@@ -1,58 +1,43 @@
 import React from 'react';
-import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+
+import CustomButton from '../custom-button/custom-button.component';
+import {
+  BackgroundImage,
+  CollectionFooterContainer,
+  CollectionItemContainer,
+  NameContainer,
+  PriceContainer,
+} from './collection-item.component.styles';
+
+import { addItemAction } from '../../redux/cart/cart.actions';
+import { Item } from '../../redux/cart/cart.interfaces';
 
 interface Props {
-  id: string;
-  name: string;
-  price: number;
-  imageUrl: string;
+  item: Item;
+  addItem: (item: Item) => void;
 }
 
-const CollectionItemContainer = styled.div`
-  width: 22%;
-  display: flex;
-  flex-direction: column;
-  height: 350px;
-  align-items: center;
-`;
+const CollectionItem = ({ item, addItem }: Props) => {
+  const { name, price, imageUrl } = item;
 
-const CollectionImage = styled.div`
-  width: 100%;
-  height: 95%;
-  background-size: cover;
-  background-position: center;
-  margin-bottom: 5px;
-`;
+  return (
+    <CollectionItemContainer>
+      <BackgroundImage className="image" imageUrl={imageUrl} />
+      <CollectionFooterContainer>
+        <NameContainer>{name}</NameContainer>
+        <PriceContainer>{price}</PriceContainer>
+      </CollectionFooterContainer>
+      <CustomButton onClick={() => addItem(item)} inverted>
+        Add to cart
+      </CustomButton>
+    </CollectionItemContainer>
+  );
+};
 
-const CollectionFooter = styled.div`
-  width: 100%;
-  height: 5%;
-  display: flex;
-  justify-content: space-between;
-  font-size: 18px;
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  addItem: (item: Item) => dispatch(addItemAction(item)),
+});
 
-  .name {
-    width: 90%;
-    margin-bottom: 15px;
-  }
-
-  .price {
-    width: 10%;
-  }
-`;
-
-const CollectionItem = ({ id, name, price, imageUrl }: Props) => (
-  <CollectionItemContainer>
-    <CollectionImage
-      style={{
-        backgroundImage: `url(${imageUrl})`,
-      }}
-    />
-    <CollectionFooter>
-      <span className="name">{name}</span>
-      <span className="price">{price}</span>
-    </CollectionFooter>
-  </CollectionItemContainer>
-);
-
-export default CollectionItem;
+export default connect(null, mapDispatchToProps)(CollectionItem);

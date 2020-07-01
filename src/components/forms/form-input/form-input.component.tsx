@@ -1,6 +1,4 @@
-import React, { ChangeEvent } from 'react';
-
-import { TargetChangeValue } from '../forms.interfaces';
+import React from 'react';
 
 import {
   FormInputContainer,
@@ -17,15 +15,11 @@ interface Props {
   required: boolean;
 }
 
-const FormInput = ({ handleChange, label, ...otherProps }: Props) => (
+const FormInput = ({ handleChange, label, ...props }: Props) => (
   <GroupContainer>
-    <FormInputContainer onChange={handleChange} {...otherProps} />
+    <FormInputContainer onChange={handleChange} {...props} />
     {label ? (
-      <FormInputLabel
-        className={`${
-          otherProps.value.length ? 'shrink' : ''
-        } form-input-label`}
-      >
+      <FormInputLabel className={`${props.value.length ? 'shrink' : ''}`}>
         {label}
       </FormInputLabel>
     ) : null}

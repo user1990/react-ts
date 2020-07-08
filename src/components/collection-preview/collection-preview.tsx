@@ -22,7 +22,7 @@ const CollectionPreviewContent = styled.div`
 
 const CollectionPreview = ({ title, items }: Data) => (
   <CollectionPreviewContainer>
-    <CollectionPreviewTitle>{title.toUpperCase()}</CollectionPreviewTitle>
+    <CollectionPreviewTitle>{title?.toUpperCase()}</CollectionPreviewTitle>
     <CollectionPreviewContent>
       {items
         .filter((item, idx) => idx < 4)
